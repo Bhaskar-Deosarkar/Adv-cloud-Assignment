@@ -1,0 +1,24 @@
+import sys
+from awsglue.transforms import *
+from awsglue.utils import getResolvedOptions
+from pyspark.context import SparkContext
+from awsglue.context import GlueContext
+from awsglue.job import Job
+
+args = getResolvedOptions(sys.argv, ['JOB_NAME'])
+sc = SparkContext()
+glueContext = GlueContext(sc)
+spark = glueContext.spark_session
+job = Job(glueContext)
+job.init(args['JOB_NAME'], args)
+
+# Script generated for node Amazon S3
+AmazonS3_node1720965958497 = glueContext.create_dynamic_frame.from_options(format_options={"quoteChar": "\"", "withHeader": True, "separator": ",", "optimizePerformance": False}, connection_type="s3", format="csv", connection_options={"paths": ["s3://aws-glue-assets-339713025727-eu-north-1/scripts/DataProcessingJob.py"]}, transformation_ctx="AmazonS3_node1720965958497")
+
+# Script generated for node AWS Glue Data Catalog
+AWSGlueDataCatalog_node1720965969028 = glueContext.create_dynamic_frame.from_catalog(database="glue database", table_name="test_csv", transformation_ctx="AWSGlueDataCatalog_node1720965969028")
+
+# Script generated for node Change Schema
+ChangeSchema_node1720965965912 = ApplyMapping.apply(frame=AmazonS3_node1720965958497, mappings=[("import sys", "string", "import sys", "string"), ("col1", "string", "col1", "string"), ("col2", "string", "col2", "string"), ("col3", "string", "col3", "string"), ("col4", "string", "col4", "string"), ("col5", "string", "col5", "string"), ("col6", "string", "col6", "string"), ("col7", "string", "col7", "string"), ("col8", "string", "col8", "string"), ("col9", "string", "col9", "string")], transformation_ctx="ChangeSchema_node1720965965912")
+
+job.commit()
